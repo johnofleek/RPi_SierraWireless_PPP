@@ -1,0 +1,16 @@
+
+# abortstring
+ABORT BUSY ABORT 'NO CARRIER' ABORT VOICE ABORT 'NO DIALTONE' ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
+
+'' ATZ
+OK AT
+# deactivate the context so the cellular carrier is down 
+OK AT+CGACT=0,3
+OK AT
+
+
+# prelogin
+
+# postlogin
+
+# end of pppconfig stuff
