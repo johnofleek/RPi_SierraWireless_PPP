@@ -1,30 +1,69 @@
-A collection of ppp and chat scripts
+# A collection of ppp and chat scripts
 
-Enables the raspberry pi to make a ppp connection to the internet. 
-Using ppp. Via a Sierra Wireless HL module
+# Purpose
+Enable the raspberry pi to make a ppp connection to the internet via the Pilot board fitted with 
+Sierra Wireless HLxxxx modem
 
-Tested so far on
-Jessie	HL7698	HL848
-Stretch HL7698
+# Tested so far on
+
+| OS | Modem(s) |
+| --- | --- |
+| Jessie | HL7698 | HL8548 |
+| Stretch | HL7698 |
+
 
 The chat script is written to allow PAP or CHAP authentication
 Note that the reason pppd's built in authentication isn't used is that the modules don't like doing that
 
 # Get started - RPi command line
+
+## copy the scripts for pppd to use
 ```
 sudo apt-get install ppp
-sudo cp streamWpppACM0 /etc/ppp/peers/
-sudo cp streamWppp /etc/chatscripts/
-sudo cp streamWpppdDisconnect /etc/chatscripts/
+sudo cp pppPilot /etc/ppp/peers/
+sudo cp chatUp /etc/chatscripts/
+sudo cp chatDown /etc/chatscripts/
+
+## Configure the HL module with the SIM card credentials
+
+Edit the file "chatHLsetup" to match the credentials required for your SIM card.
+
+# Execute the chat script 
 ```
-## make the connection
-sudo pppd call streamWpppACM0
+chat -v -f ./chatHLsetup > /dev/ttyACM0 < /dev/ttyACM0
 
-# debug
-## Check script execution
+```
+
+# Make an IP connection with the Pilot / HL
+Note that serial port ttyACM0 is used 
+	- ttyACM2 and the hardware serial port ttyAMA0 have not at this time been tested
+
+sudo pppd  /dev/ttyACM0 115200 call pppPilot
+
+
+# Debugging
+## Check script execution - do this in another shell terminal
+```
 tail -f /var/log/syslog
+```
 
-## Talk to the modem 
-
+## Talk to the modem directly from the raspberry pi
+For details on the modem AT command manual at source.sierrawireless.com
+```
 sudo apt-get install minicom
 sudo minicom -D /dev/ttyACM0
+```
+
+## Check the IP interface with **Example response**
+'''
+ifconfig ppp1
+
+ppp1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
+        inet 172.26.168.84  netmask 255.255.255.255  destination 172.26.168.84
+        ppp  txqueuelen 3  (Point-to-Point Protocol)
+        RX packets 4  bytes 58 (58.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4  bytes 64 (64.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+'''

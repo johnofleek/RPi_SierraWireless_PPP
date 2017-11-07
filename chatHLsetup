@@ -1,0 +1,24 @@
+# chatHLsetup
+#
+# This file is intended to be used to configure a Sierra Wireless HL modem
+# So that the HL modem use with other pppd / chat scripts
+# Change the settings to suit the SIM card / contract you are using
+# Current example settings are for a stream SIM 
+# which requires PAP user / password authentication
+
+# To execute from this folder against ttyACM0 serial port
+# chat -v -f ./chatHLsetup > /dev/ttyACM0 < /dev/ttyACM0
+
+ABORT BUSY ABORT 'NO CARRIER' ABORT VOICE ABORT 'NO DIALTONE' ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
+# modeminit
+'' ATZ
+OK AT
+OK AT+CGDCONT=3,"IPV4V6","stream.co.uk","0.0.0.0",0,0
+# set the username and password so that pppd doesn't try to negotiate
+
+OK AT+WPPP=1,3,"streamip","streamip"
+#activate the context so the cellular carrier is up before pppd connects
+
+
+
+
