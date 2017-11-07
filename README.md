@@ -8,11 +8,12 @@ Sierra Wireless HLxxxx modem
 
 | OS | Modem(s) |
 | --- | --- |
-| Jessie | HL7698 | HL8548 |
+| Jessie | HL7698 HL8548 |
 | Stretch | HL7698 |
 
 
-The chat script is written to allow PAP or CHAP authentication
+The chat script is written to allow PAP or CHAP authentication.
+
 Note that the reason pppd's built in authentication isn't used is that the modules don't like doing that
 
 # Get started - RPi command line
@@ -23,7 +24,7 @@ sudo apt-get install ppp
 sudo cp pppPilot /etc/ppp/peers/
 sudo cp chatUp /etc/chatscripts/
 sudo cp chatDown /etc/chatscripts/
-
+```
 ## Configure the HL module with the SIM card credentials
 
 Edit the file "chatHLsetup" to match the credentials required for your SIM card.
