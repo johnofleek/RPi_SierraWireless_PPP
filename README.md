@@ -44,9 +44,9 @@ chat -v -f ./chatHLsetup > /dev/ttyACM0 < /dev/ttyACM0
 ## Make an IP connection with the Pilot / HL
 Note that serial port ttyACM0 is used 
 	- ttyACM2 and the hardware serial port ttyAMA0 have not at this time been tested
-
+```
 sudo pppd  /dev/ttyACM0 115200 call pppPilot
-
+```
 
 ## Debugging
 ### Check script execution - do this in another shell terminal
