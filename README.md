@@ -62,7 +62,7 @@ sudo minicom -D /dev/ttyACM0
 ```
 
 ### Check the IP interface with **Example response**
-````
+```
 ifconfig ppp1
 
 ppp1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
