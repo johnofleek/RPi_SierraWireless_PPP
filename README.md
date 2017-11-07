@@ -11,12 +11,12 @@ The chat script is written to allow PAP or CHAP authentication
 Note that the reason pppd's built in authentication isn't used is that the modules don't like doing that
 
 # Get started - RPi command line
-
+```
 sudo apt-get install ppp
 sudo cp streamWpppACM0 /etc/ppp/peers/
 sudo cp streamWppp /etc/chatscripts/
 sudo cp streamWpppdDisconnect /etc/chatscripts/
-
+```
 ## make the connection
 sudo pppd call streamWpppACM0
 
