@@ -1,10 +1,10 @@
 # A collection of ppp and chat scripts
 
-# Purpose
+## Purpose
 Enable the raspberry pi to make a ppp connection to the internet via the Pilot board fitted with 
 Sierra Wireless HLxxxx modem
 
-# Tested so far on
+## Tested so far on
 
 | OS | Modem(s) |
 | --- | --- |
@@ -14,11 +14,11 @@ Sierra Wireless HLxxxx modem
 
 The chat script is written to allow PAP or CHAP authentication.
 
-Note that the reason pppd's built in authentication isn't used is that the modules don't like doing that
+Note that the reason pppd's built in authentication isn't used is that some of the modules don't like doing that
 
 # Get started - RPi command line
 
-## copy the scripts for pppd to use
+## Copy the scripts for pppd to use
 ```
 sudo apt-get install ppp
 sudo cp pppPilot /etc/ppp/peers/
@@ -27,36 +27,40 @@ sudo cp chatDown /etc/chatscripts/
 ```
 ## Configure the HL module with the SIM card credentials
 
-Edit the file "chatHLsetup" to match the credentials required for your SIM card.
+Edit the file "chatHLsetup" to match the credentials required for your SIM card. 
 
-# Execute the chat script 
+Notes 
+-    The example uses PAP autentication
+-    If using a physical serial port baud rate and handshake settings will be needed. 
+-    If the sim desn't require authentication credentials set both the username and password to empty strings ""
+    
+Then execute the chat script as follows 
 ```
 chat -v -f ./chatHLsetup > /dev/ttyACM0 < /dev/ttyACM0
-
 ```
 
-# Make an IP connection with the Pilot / HL
+## Make an IP connection with the Pilot / HL
 Note that serial port ttyACM0 is used 
 	- ttyACM2 and the hardware serial port ttyAMA0 have not at this time been tested
 
 sudo pppd  /dev/ttyACM0 115200 call pppPilot
 
 
-# Debugging
-## Check script execution - do this in another shell terminal
+## Debugging
+### Check script execution - do this in another shell terminal
 ```
 tail -f /var/log/syslog
 ```
 
-## Talk to the modem directly from the raspberry pi
+### Talk to the modem directly from the raspberry pi
 For details on the modem AT command manual at source.sierrawireless.com
 ```
 sudo apt-get install minicom
 sudo minicom -D /dev/ttyACM0
 ```
 
-## Check the IP interface with **Example response**
-'''
+### Check the IP interface with **Example response**
+````
 ifconfig ppp1
 
 ppp1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
@@ -67,4 +71,4 @@ ppp1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
         TX packets 4  bytes 64 (64.0 B)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-'''
+```
