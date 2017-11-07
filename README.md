@@ -12,7 +12,7 @@ Sierra Wireless HLxxxx modem
 | Stretch | HL7698 |
 
 
-The chat script is written to allow PAP or CHAP authentication.
+
 
 Note that the reason pppd's built in authentication isn't used is that some of the modules don't like doing that
 
@@ -26,15 +26,16 @@ sudo cp chatUp /etc/chatscripts/
 sudo cp chatDown /etc/chatscripts/
 ```
 ## Configure the HL module with the SIM card credentials
-
-Edit the file "chatHLsetup" to match the credentials required for your SIM card. 
+The chat script is written to automate configuration of modem APN, PAP or CHAP authentication settings. Alternatively this can be carried out manually using a terminal and AT commands.
 
 Notes 
 -    The example uses PAP autentication
 -    If using a physical serial port baud rate and handshake settings will be needed. 
 -    If the sim desn't require authentication credentials set both the username and password to empty strings ""
 -    This script only needs to be run when the modem settings need to be changed - the modem retains the settings after a power cycle
-    
+
+Edit the file "chatHLsetup" to match the credentials required for your SIM card. 
+
 Then execute the chat script as follows 
 ```
 chat -v -f ./chatHLsetup > /dev/ttyACM0 < /dev/ttyACM0
