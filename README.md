@@ -33,6 +33,7 @@ Notes
 -    The example uses PAP autentication
 -    If using a physical serial port baud rate and handshake settings will be needed. 
 -    If the sim desn't require authentication credentials set both the username and password to empty strings ""
+-    This script only needs to be run when the modem settings need to be changed - the modem retains the settings after a power cycle
     
 Then execute the chat script as follows 
 ```
