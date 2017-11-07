@@ -12,10 +12,6 @@ Sierra Wireless HLxxxx modem
 | Stretch | HL7698 |
 
 
-
-
-Note that the reason pppd's built in authentication isn't used is that some of the modules don't like doing that
-
 # Get started - RPi command line
 
 ## Copy the scripts for pppd to use
@@ -33,6 +29,7 @@ Notes
 -    If using a physical serial port - baud rate and handshake settings will be needed. 
 -    If the sim doesn't require authentication credential settings - set both the username and password to empty strings ""
 -    This script only needs to be run when the modem settings need to be changed - the modem retains the settings after a power cycle
+-    The reason pppd's built in authentication isn't used is that some of the modules don't like doing that
 
 Edit the file "chatHLsetup" to match the credentials required for your SIM card. 
 
@@ -47,6 +44,7 @@ Note that serial port ttyACM0 is used
 ```
 sudo pppd  /dev/ttyACM0 115200 call pppPilot
 ```
+
 
 ## Debugging
 ### Check script execution - do this in another shell terminal
