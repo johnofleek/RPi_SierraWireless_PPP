@@ -1,13 +1,13 @@
 ## Scope
-To see what happens when we run use PPP over a USB UART connected to RPi
+To see what happens when we use PPP with a Sierra Wireless RC7620 connected via USB UART to an RPi
 
 ## Kit used
 * RPi4
 * WASP + WP7620 
 
 
-## Versions used for testing (Buster 2022-01)
-RPi 4 OS  
+## Versions used for testing (Latest available 2022-01)
+### RPi 4 OS  
 ```
 $ uname -a
 Linux raspberrypi 5.10.63-v7l+ #1459 SMP Wed Oct 6 16:41:57 BST 2021 armv7l GNU/Linu
@@ -18,7 +18,7 @@ NAME="Raspbian GNU/Linux"
 VERSION_ID="11"
 ```
 
-Modem FW version  
+### RC7620 modem FW version  
 ```
 Manufacturer: Sierra Wireless, Incorporated
 Model: RC7620
@@ -28,4 +28,9 @@ IMEI: 353634110110227
 IMEI SV: 19
 FSN: 7Q0273850613B0
 +GCAP: +CGSM
+
+From One-click RC76xx_Release9_BP10_GENERIC_test.exe
+which contains RC76xx_Release9_BP10_GENERIC_test.spk
 ```
+
+
