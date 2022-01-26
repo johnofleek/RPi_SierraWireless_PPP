@@ -57,6 +57,8 @@ AT+CGDCONT=2,"IP","three.co.uk"
 AT+CGDCONT=3,"IP","three.co.uk"
 AT+CGDCONT=4,"IP","three.co.uk"
 AT+CGDCONT=5,"IP","three.co.uk"
+
+AT+CGACT: 3,1
 ```
 Exit microcom CTRL ALT x
 
