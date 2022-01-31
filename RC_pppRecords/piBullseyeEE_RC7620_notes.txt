@@ -1,0 +1,68 @@
+pi@raspberrypi:~ $ sudo pppd  /dev/ttyUSB2 record pptestee.txt call pppRC7620
+pppd options in effect:
+debug           # (from /etc/ppp/peers/pppRC7620)
+nodetach                # (from /etc/ppp/peers/pppRC7620)
+unit 1          # (from /etc/ppp/peers/pppRC7620)
+dump            # (from /etc/ppp/peers/pppRC7620)
+noauth          # (from /etc/ppp/peers/pppRC7620)
+/dev/ttyUSB2            # (from command line)
+nolock          # (from /etc/ppp/peers/pppRC7620)
+connect /usr/sbin/chat -v -f /etc/chatscripts/chatUp            # (from /etc/ppp/peers/pppRC7620)
+disconnect /usr/sbin/chat -v -f /etc/chatscripts/chatDown               # (from /etc/ppp/peers/pppRC7620)
+record pptestee.txt             # (from command line)
+crtscts         # (from /etc/ppp/options)
+modem           # (from /etc/ppp/options)
+noaccomp                # (from /etc/ppp/peers/pppRC7620)
+asyncmap 0              # (from /etc/ppp/options)
+nomagic         # (from /etc/ppp/peers/pppRC7620)
+nopcomp         # (from /etc/ppp/peers/pppRC7620)
+lcp-echo-failure 4              # (from /etc/ppp/options)
+lcp-echo-interval 30            # (from /etc/ppp/options)
+show-password           # (from /etc/ppp/peers/pppRC7620)
+novj            # (from /etc/ppp/peers/pppRC7620)
+ipcp-accept-local               # (from /etc/ppp/peers/pppRC7620)
+ipcp-accept-remote              # (from /etc/ppp/peers/pppRC7620)
+noipdefault             # (from /etc/ppp/peers/pppRC7620)
+defaultroute            # (from /etc/ppp/peers/pppRC7620)
+replacedefaultroute             # (from /etc/ppp/peers/pppRC7620)
+usepeerdns              # (from /etc/ppp/peers/pppRC7620)
+:               # (from /etc/ppp/peers/pppRC7620)
+noipv6          # (from /etc/ppp/peers/pppRC7620)
+noccp           # (from /etc/ppp/peers/pppRC7620)
+noipx           # (from /etc/ppp/options)
+Script /usr/sbin/chat -v -f /etc/chatscripts/chatUp finished (pid 2952), status = 0x0
+Serial connection established.
+using channel 2
+Using interface ppp1
+Connect: ppp1 <--> /dev/pts/2
+sent [LCP ConfReq id=0x1 <asyncmap 0x0>]
+rcvd [LCP ConfReq id=0x0 <asyncmap 0x0> <auth pap> <magic 0xf098bd1e> <pcomp> <accomp>]
+sent [LCP ConfRej id=0x0 <magic 0xf098bd1e> <pcomp> <accomp>]
+rcvd [LCP ConfAck id=0x1 <asyncmap 0x0>]
+rcvd [LCP ConfReq id=0x1 <asyncmap 0x0> <auth pap>]
+sent [LCP ConfAck id=0x1 <asyncmap 0x0> <auth pap>]
+sent [LCP EchoReq id=0x0 magic=0x0]
+sent [PAP AuthReq id=0x1 user="raspberrypi" password=""]
+rcvd [LCP DiscReq id=0x2 magic=0xf098bd1e]
+rcvd [LCP EchoRep id=0x0 magic=0xf098bd1e 00 00 00 00]
+rcvd [PAP AuthAck id=0x1 ""]
+PAP authentication succeeded
+sent [IPCP ConfReq id=0x1 <addr 0.0.0.0> <ms-dns1 0.0.0.0> <ms-dns2 0.0.0.0>]
+rcvd [IPCP ConfReq id=0x0]
+sent [IPCP ConfNak id=0x0 <addr 0.0.0.0>]
+rcvd [IPCP ConfNak id=0x1 <addr 100.69.130.124> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+sent [IPCP ConfReq id=0x2 <addr 100.69.130.124> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+rcvd [IPCP ConfReq id=0x1]
+sent [IPCP ConfAck id=0x1]
+rcvd [IPCP ConfAck id=0x2 <addr 100.69.130.124> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+Could not determine remote IP address: defaulting to 10.64.64.65
+Script /etc/ppp/ip-pre-up started (pid 2958)
+Script /etc/ppp/ip-pre-up finished (pid 2958), status = 0x0
+replacing old default route to eth0 [10.10.10.1]
+del old default route ioctl(SIOCDELRT): No such process(3)
+local  IP address 100.69.130.124
+remote IP address 10.64.64.65
+primary   DNS address 109.249.185.228
+secondary DNS address 109.249.185.229
+Script /etc/ppp/ip-up started (pid 2961)
+Script /etc/ppp/ip-up finished (pid 2961), status = 0x0
