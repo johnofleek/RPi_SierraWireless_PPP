@@ -1,5 +1,5 @@
 ## Scope
-To see what happens when we use PPP with a Sierra Wireless RC7620 connected via USB UART to an RPi
+To see what happens when we use PPP with a Sierra Wireless RC7620 connected via RC7620 composite USB device UART to an RPi
 
 ## Kit used
 * RPi4
@@ -171,16 +171,28 @@ sudo pppd  /dev/ttyUSB2 record pptestee.txt call pppRC7620
 ```
 
 Connection testing worked OK  - results  
-[record](./RC_pppRecords/pptestee.txt  
+[record](./RC_pppRecords/pptestee.txt)  
 [pcap](./RC_pppRecords/pptestee.pcap)  
 
 
 
-# Test with older modem FW
+# Test on EE with older modem FW
 
 ## RC7620-1 SWI9X07H_00.08.19.00
 
 Flashed with one click installer *RC76xx_Release9_BP6_GENERIC_test.exe*  
+
+
+```
+$ sudo pppd  /dev/ttyUSB2 record pptestee_08_19.txt call pppRC7620
+```
+
+
+Connection testing worked OK  - results  
+[record](./RC_pppRecords/pptestee_08_19.txt)  
+[pcap](./RC_pppRecords/pptestee_08_19.pcap)
+
+
 
 Modem reports
 
@@ -225,6 +237,9 @@ UART example
 sudo apt-get install minicom
 sudo minicom -D /dev/ttyACM0
 ```
+
+
+
 
 ## Check the IP interface
 
