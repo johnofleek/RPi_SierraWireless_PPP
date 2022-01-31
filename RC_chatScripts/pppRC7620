@@ -49,3 +49,5 @@ noaccomp
 nopcomp
 # unit n: sets ppp unit number (ppp0,ppp1,...,pppn)
 unit 1
+# record filename: Specifies that pppd should record all characters sent and received to a file named filename.
+# record rc7620record1

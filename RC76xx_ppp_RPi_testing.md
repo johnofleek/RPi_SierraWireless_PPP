@@ -42,7 +42,7 @@ sudo apt-get install ppp
 
 ### Scripts
 
-Chat script notes
+**Chat script notes**
 
 * chat doesn't like windows line termination - be careful to set your editor to Unix (LF)
 * remember to disable the modems charater echo as echo will confuse your chat script logic
@@ -54,7 +54,12 @@ chatUp
 pppRC7620
 ```
 
-Copy the scripts to somewhere pppd can find them. For example
+**pppd settings**
+Edit file *pppRC7620* if required
+
+
+**Copy the scripts**
+To somewhere pppd can find them. For example
 
 ```
 sudo cp pppRC7620 /etc/ppp/peers/
@@ -64,7 +69,7 @@ sudo cp chatDown /etc/chatscripts/
 
 
 
-## SIM - Three internet settings
+## Connect - Using a Three SIM
 
 Try three first - doesn't require authentication
 
@@ -75,6 +80,7 @@ Terminal access RC7620 USB AT command port
 sudo minicom -D /dev/ttyUSB2
 ```
 
+Configure the contexts for the three network
 ```
 AT+CGDCONT=1,"IP","three.co.uk"
 AT+CGDCONT=2,"IP","three.co.uk"
@@ -86,21 +92,47 @@ AT+CGACT: 3,1
 ```
 Exit minicom CTRL ALT x
 
+
 ### set authentication
-Not required for the three network - but note that the Pi Os is picking up PAP authentiaction anyway - this needs further investigation.
+TBD 
+
+Not required for the three network - but note that the Pi Os is picking up PAP authentication anyway - this needs further investigation.
 
 ```
 sent [PAP AuthReq id=0x1 user="raspberrypi" password=""]
 ```
 
 
-### Make an IP Cellular WAN connections using pppd
+### Make ppp connection
+Make an IP Cellular WAN connections using pppd
+
 
 ```
 sudo pppd  /dev/ttyUSB2 115200 call pppRC7620
 ```
-sudo chat -v -f ./chatUp > /dev/ttyUSB2 < /dev/ttyUSB2
 
+### Make ppp connection and create a log that can be used with wireshark
+
+For [examples](./pppRecords) 
+```
+sudo pppd  /dev/ttyUSB2 record pptest.txt call pppRC7620
+```
+
+This logs the chat conversation and the ppp negotiation to pptest.txt. This is an append operation.
+
+Wireshark can decode ppp negotiation.
+In wireshark open the file created by pppd, wireshark will automatically decoded the ppp negotiation in a human readable format. 
+Note that the record file also has the chat commands embedded.  
+
+
+
+## Testing chat scripts
+
+Standalone testing of chat scripts can be carried out like this. Where /dev/ttyUSB2 is the modem AT command port
+
+```
+sudo chat -v -f ./chatUp > /dev/ttyUSB2 < /dev/ttyUSB2
+```
 
 
 
