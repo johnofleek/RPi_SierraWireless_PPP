@@ -145,6 +145,7 @@ Password: secure
 
 Configure the contexts for the EE network
 ```
+AT+CGDCONT=1
 AT+CGDCONT=2,"IP","everywhere"
 AT+CGDCONT=3,"IP","everywhere"
 AT+CGDCONT=4,"IP","everywhere"
