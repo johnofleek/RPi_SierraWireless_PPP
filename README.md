@@ -1,8 +1,8 @@
 ## Purpose
 Enable the RPi 3/4 + RPi OS to make a ppp connection to the internet using Sierra Wireless modems
 
-## RC76xx modules  
-[guide](./RC76xx_ppp_RPi_testing.md)  
+## RC7620 module  
+[guide and report](./RC76xx_ppp_RPi_testing.md)  
 
 [scripts](./RC_chatScripts)  
 
@@ -10,9 +10,16 @@ Enable the RPi 3/4 + RPi OS to make a ppp connection to the internet using Sierr
 
 
 
-## HL76xx modules  
-[guide](./HL76xx_ppp_Rpi_testing.md)  
+## HL7692 module  
+[guide and report](./HL76xx_ppp_Rpi_testing.md)  
 
 [scripts](./HL_chatScripts)  
 
 [logs]()  
+
+## HL8548 module
+[report](./HL8548_ppp_RPi_testing.md)
+
+[scripts](./RC_chatScripts)
+
+[logs](./HL8548_pppRecords) 
