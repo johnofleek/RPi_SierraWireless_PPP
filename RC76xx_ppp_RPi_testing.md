@@ -158,12 +158,12 @@ AT+CGDCONT?
 
 Manually add the PAP credentials
 ```
-OK AT+WPPP=1,3,"eesecure","secure"
+AT+WPPP=1,3,"eesecure","secure"
 ```
 
 chat script establishes context and authentication prior to ppp negotiating the session by using
 ```
-AT+CGACT=3,1
+AT+CGACT=1,3
 ```
 
 Run with ee SIM using pppd as per three network example above
@@ -222,6 +222,44 @@ PING 8.8.8.8 (8.8.8.8) from 100.68.11.121 ppp1: 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=2 ttl=114 time=70.0 ms
 64 bytes from 8.8.8.8: icmp_seq=3 ttl=114 time=39.1 ms
 ```
+
+Syslog
+```
+Connect: ppp1 <--> /dev/pts/2
+sent [LCP ConfReq id=0x1 <asyncmap 0x0>]
+rcvd [LCP ConfReq id=0x0 <asyncmap 0x0> <auth pap> <magic 0xf098bd1e> <pcomp> <accomp>]
+sent [LCP ConfRej id=0x0 <magic 0xf098bd1e> <pcomp> <accomp>]
+rcvd [LCP ConfAck id=0x1 <asyncmap 0x0>]
+rcvd [LCP ConfReq id=0x1 <asyncmap 0x0> <auth pap>]
+sent [LCP ConfAck id=0x1 <asyncmap 0x0> <auth pap>]
+sent [LCP EchoReq id=0x0 magic=0x0]
+sent [PAP AuthReq id=0x1 user="raspberrypi" password=""]
+rcvd [LCP DiscReq id=0x2 magic=0xf098bd1e]
+rcvd [LCP EchoRep id=0x0 magic=0xf098bd1e 00 00 00 00]
+rcvd [PAP AuthAck id=0x1 ""]
+PAP authentication succeeded
+sent [IPCP ConfReq id=0x1 <addr 0.0.0.0> <ms-dns1 0.0.0.0> <ms-dns2 0.0.0.0>]
+rcvd [IPCP ConfReq id=0x0]
+sent [IPCP ConfNak id=0x0 <addr 0.0.0.0>]
+rcvd [IPCP ConfNak id=0x1 <addr 100.69.130.124> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+sent [IPCP ConfReq id=0x2 <addr 100.69.130.124> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+rcvd [IPCP ConfReq id=0x1]
+sent [IPCP ConfAck id=0x1]
+rcvd [IPCP ConfAck id=0x2 <addr 100.69.130.124> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+Could not determine remote IP address: defaulting to 10.64.64.65
+Script /etc/ppp/ip-pre-up started (pid 2958)
+Script /etc/ppp/ip-pre-up finished (pid 2958), status = 0x0
+replacing old default route to eth0 [10.10.10.1]
+del old default route ioctl(SIOCDELRT): No such process(3)
+local  IP address 100.69.130.124
+remote IP address 10.64.64.65
+primary   DNS address 109.249.185.228
+secondary DNS address 109.249.185.229
+```
+
+
+
+
 
 
 # Debugging

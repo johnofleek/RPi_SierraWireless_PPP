@@ -22,7 +22,8 @@ sudo cp chatUp /etc/chatscripts/
 sudo cp chatDown /etc/chatscripts/
 ```
 ## Configure the HL module with the SIM card credentials
-The chat script is written to automate configuration of modem APN, PAP or CHAP authentication settings. Alternatively this can be carried out manually using a terminal and AT commands.
+The chat script is written to automate configuration of modem APN, PAP or CHAP authentication settings. 
+Alternatively this can be carried out manually using a terminal and AT commands.
 
 Notes 
 -    The example uses PAP authentication
