@@ -33,7 +33,7 @@ noccp
 # usepeerdns: asks the peer for up to 2 DNS server address
 usepeerdns
 # nodetach: does not detach from the controlling terminal
-nodetach
+# nodetach
 # ipcp-accept-local: pppd will accept the peer's idea of our local IP address even if the local IP address was specified in a option
 ipcp-accept-local
 # ipcp-accept-remote: idem with remote Ip address

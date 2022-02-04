@@ -1,12 +1,13 @@
-## Scope
+# Scope
 To see what happens when we use PPP with a Sierra Wireless RC7620 connected via RC7620 composite USB device UART to an RPi
 
-## Kit used
+# Kit used
 * RPi4
 * WASP + HL7802 
 
 
-### Versions used for testing (Latest available 2022-01)
+## Versions used for testing (Latest available 2022-01)
+
 ### RPi 4 OS  
 ```
 $ uname -a
@@ -34,7 +35,9 @@ HL78xx.4.6.9.4.RK_02_01_02_00_137.20210615
 IMEI-SV: 3594590901168914
 ```
 ### Modem config
-Modem composition depends on the AT+KUSBCOMP setting
+Modem composition depends on the AT+KUSBCOMP setting.
+
+Note that only the AT_PPP tty supports PPP and therefore we with the default composition we need to use ttyACM1
 
 ```
 at+kusbcomp?
@@ -48,44 +51,72 @@ crw-rw---- 1 root dialout 166, 2 Feb  1 17:19 /dev/ttyACM2
 ```
 
 
- due to current (HL7802.4.6.9) ctx 3 not working
+## Chat scripts
+
+### Cellular Context (CID)
+
+The HL7802 has a very specific and restricted range of CID values - in the UK only 1 & 2 are supported.
+ The supported CID range is dependent on the operator configuration. 
+ See [AirPrime HL78XX Customization Guide Application Note](https://source.sierrawireless.com/resources/airprime/application_notes_and_code_samples/airprime_hl7800-m_mno_and_rf_band_customization_at_customer_production_site_application_note/#sthash.QAiPHl0Y.SpqTDh1l.dpbs)
+ table 2 row 4 and the following Sierra statement
+ 
 ```
-sudo cp pppHL7802 /etc/ppp/peers/
-sudo cp chatUpHL7802 /etc/chatscripts/
-sudo cp chatDownHL7802 /etc/chatscripts/
+Parameters like available CIDs might vary depending on operator configuration
+set by +KCARRIERCFG . Refer to Table 2 Device Configuration of AirPrime
+HL7800-M MNO and RF Band Customization at Customer Application Site
+Application Note (reference number 2174213) for configuration description.
+``` 
+
+### HL7802 specific chat scripts
+The following chat scripts are for demo purposes.
+ During the development we noticed a few differences between the HL7812 and the other HL modems. 
+ The main ones being  
+ * closing a PPP session doesn't hang up the modem call - we are manually doing that in the chats
+ * the modem ERRORS if CGACT is used and the context is already in the state requested
+
+Assuming shell is at the root of the project git [clone](https://github.com/johnofleek/RPi_SierraWireless_PPP)
+ 
+```
+sudo cp ./RC_chatScripts/pppHL7802 /etc/ppp/peers/
+sudo cp ./RC_chatScripts/chatUpHL7802 /etc/chatscripts/
+sudo cp ./RC_chatScripts/chatDownHL7802 /etc/chatscripts/
 ```
 
 
-
-See RP76xx testing for more details regarding apps and settings
+See RP76xx testing for further details regarding apps and settings
 
 
 # Test with ee SIM
 
-
-
 ## Manual context activation test
 
-Note for this modem cgdcont is able to display the modems IP address 
+Note for this modem cgdcont is able to display the modems IP address, but 
+only via the serial session that caused the connection.
 
 
-
+Set the APN
 ```
 AT+CGDCONT=1
 AT+CGDCONT=2,"IP","everywhere"
 
 ```
-Only contexts 1 and 2 seem to work
+Note change to context 2
 
+Set the PAP credentials 
 ```
 AT+WPPP=1,2,"eesecure","secure"
-
+```
+Activate the context (chat script automates this)
+```
 AT+CGACT=1,2
 
 at+cgdcont?
 at+cgdcont?
 +CGDCONT: 2,"IP","everywhere",,0,0,,0,,,,,,,,
+```
 
+Echo needs to be off for the chat script to function 
+```
 ATE0
 AT&W
 ```
@@ -96,9 +127,9 @@ $ sudo pppd  /dev/ttyACM1 record HL7802_ppptestee.txt call pppHL7802
 ```
 
 
-Connection testing worked OK  - results  
-[record](.//.txt)  
-[pcap](.//.pcap)
+Connection testing worked OK  - pppd logging results  
+[recording](./HL7802_pppRecords/HL7802_ppptestee.txt)  
+[pcap](./HL7802_pppRecords/HL7802_ppptestee.pcap)
 
 
 
@@ -123,11 +154,12 @@ PING 8.8.8.8 (8.8.8.8) from 10.135.80.191 ppp1: 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=4 ttl=55 time=285 ms
 
 ```
+## stop pppd if nodetach isn't enabled
 
-
-
-
-
+The method I have found (so far) is
+```
+sudo killall pppd
+```
 
 
 # Debugging
@@ -164,7 +196,7 @@ sudo chat -v -f ./chatDownHL7802 > /dev/ttyACM1 < /dev/ttyACM1
 
 as above
 
-## Actual command line session capture
+## Actual command line connect session capture
 
 ```
 sudo pppd  /dev/ttyACM1 record HL7802_ppptestee.txt call pppHL7802
@@ -281,4 +313,44 @@ Feb  4 12:00:57 raspberrypi avahi-daemon[361]: Got SIGHUP, reloading.
 Feb  4 12:00:57 raspberrypi avahi-daemon[361]: No service file found in /etc/avahi/services.
 Feb  4 12:00:57 raspberrypi avahi-daemon[361]: Failed to parse address 'fe80::4009:c4ff:fea0:df89%eth0', ignoring.
 Feb  4 12:00:57 raspberrypi pppd[3528]: Script /etc/ppp/ip-up finished (pid 3539), status = 0x0
+```
+
+kill session capture
+```
+Feb  4 14:57:24 raspberrypi pppd[4511]: Terminating on signal 15
+Feb  4 14:57:24 raspberrypi pppd[4511]: Connect time 5.6 minutes.
+Feb  4 14:57:24 raspberrypi pppd[4511]: Sent 0 bytes, received 0 bytes.
+Feb  4 14:57:24 raspberrypi pppd[4511]: Script /etc/ppp/ip-down started (pid 4606)
+Feb  4 14:57:24 raspberrypi pppd[4511]: sent [LCP TermReq id=0x3 "User request"]
+Feb  4 14:57:24 raspberrypi pppd[4511]: rcvd [LCP TermAck id=0x3]
+Feb  4 14:57:24 raspberrypi pppd[4511]: Connection terminated.
+Feb  4 14:57:24 raspberrypi chat[4650]: timeout set to 8 seconds
+Feb  4 14:57:24 raspberrypi chat[4650]: send (\d)
+Feb  4 14:57:24 raspberrypi avahi-daemon[361]: Got SIGHUP, reloading.
+Feb  4 14:57:24 raspberrypi avahi-daemon[361]: No service file found in /etc/avahi/services.
+Feb  4 14:57:24 raspberrypi avahi-daemon[361]: Failed to parse address 'fe80::4009:c4ff:fea0:df89%eth0', ignoring.
+Feb  4 14:57:25 raspberrypi chat[4650]: send (+++^M)
+Feb  4 14:57:25 raspberrypi chat[4650]: send (\d)
+Feb  4 14:57:26 raspberrypi chat[4650]: send (ATH^M)
+Feb  4 14:57:26 raspberrypi chat[4650]: expect (NO CARRIER)
+Feb  4 14:57:28 raspberrypi chat[4650]: ~^?}#@!}!}#} }4}"}&} } } } }%}&q}^DZ}'}"}(}"%N~~^?}#@!}%}$} }0User request>^K~^M
+Feb  4 14:57:28 raspberrypi chat[4650]: NO CARRIER
+Feb  4 14:57:28 raspberrypi chat[4650]:  -- got it
+Feb  4 14:57:28 raspberrypi chat[4650]: send (AT^M)
+Feb  4 14:57:28 raspberrypi chat[4650]: expect (OK)
+Feb  4 14:57:28 raspberrypi chat[4650]: ^M
+Feb  4 14:57:28 raspberrypi chat[4650]: ^M
+Feb  4 14:57:28 raspberrypi chat[4650]: OK
+Feb  4 14:57:28 raspberrypi chat[4650]:  -- got it
+Feb  4 14:57:28 raspberrypi chat[4650]: send (AT+CGACT=0,2^M)
+Feb  4 14:57:28 raspberrypi chat[4650]: expect (OK)
+Feb  4 14:57:28 raspberrypi chat[4650]: ^M
+Feb  4 14:57:28 raspberrypi chat[4650]: ^M
+Feb  4 14:57:28 raspberrypi chat[4650]: OK
+Feb  4 14:57:28 raspberrypi chat[4650]:  -- got it
+Feb  4 14:57:28 raspberrypi chat[4650]: send (``^M)
+Feb  4 14:57:28 raspberrypi pppd[4511]: Script /usr/sbin/chat -v -f /etc/chatscripts/chatDownHL7802 finished (pid 4648), status = 0x0
+Feb  4 14:57:28 raspberrypi pppd[4511]: Serial link disconnected.
+Feb  4 14:57:29 raspberrypi pppd[4511]: Script /etc/ppp/ip-down finished (pid 4606), status = 0x0
+Feb  4 14:57:29 raspberrypi pppd[4511]: Exit.
 ```
