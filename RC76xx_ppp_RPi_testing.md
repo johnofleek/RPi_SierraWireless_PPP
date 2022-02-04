@@ -113,7 +113,7 @@ sudo pppd  /dev/ttyUSB2 115200 call pppRC7620
 
 ### Make ppp connection and create a log that can be used with wireshark
 
-For [examples](./RC_pppRecords) 
+For [examples](./RC7620_pppRecords) 
 ```
 sudo pppd  /dev/ttyUSB2 record pptest.txt call pppRC7620
 ```

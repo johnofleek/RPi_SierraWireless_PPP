@@ -77,9 +77,9 @@ The following chat scripts are for demo purposes.
 Assuming shell is at the root of the project git [clone](https://github.com/johnofleek/RPi_SierraWireless_PPP)
  
 ```
-sudo cp ./RC_chatScripts/pppHL7802 /etc/ppp/peers/
-sudo cp ./RC_chatScripts/chatUpHL7802 /etc/chatscripts/
-sudo cp ./RC_chatScripts/chatDownHL7802 /etc/chatscripts/
+sudo cp ./HL78xx_chatScripts/pppHL7802 /etc/ppp/peers/
+sudo cp ./HL78xx_chatScripts/chatUpHL7802 /etc/chatscripts/
+sudo cp ./HL78xx_chatScripts/chatDownHL7802 /etc/chatscripts/
 ```
 
 
