@@ -1,0 +1,24 @@
+
+# abortstrings
+# ABORT BUSY ABORT VOICE ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
+TIMEOUT 8
+ECHO    ON
+
+# 1 second delay
+'' \d\c
+## hangup - HL7802 doesn't hangup when pppd session stops
+'' +++
+
+# 1 second delay
+'' \d\c
+
+'' ATH
+
+'NO CARRIER' AT
+
+# deactivate the context so the cellular carrier is down next time we connect
+OK AT+CGACT=0,2
+
+OK ``
+
+

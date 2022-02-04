@@ -9,6 +9,12 @@ Enable the RPi 3/4 + RPi OS to make a ppp connection to the internet using Sierr
 [logs](./RC_pppRecords)  
 
 
+## HL7802 module  
+[guide and report](./HL7802_ppp_RPi_testing.md)  
+
+[scripts](./RC_chatScripts)  
+
+[logs]()  
 
 ## HL7692 module  
 [guide and report](./HL76xx_ppp_Rpi_testing.md)  

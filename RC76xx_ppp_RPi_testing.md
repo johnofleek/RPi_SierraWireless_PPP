@@ -257,10 +257,16 @@ primary   DNS address 109.249.185.228
 secondary DNS address 109.249.185.229
 ```
 
+# notes on FW
 
+During testing we noticed that the modem doesn't offer a remote_IP_address 
 
+See
+https://linux.die.net/man/8/pppd
+Options
+<local_IP_address>:<remote_IP_address>
 
-
+And a old but useful https://groups.google.com/g/comp.protocols.ppp/c/xo-sid_FoC0?pli=1
 
 # Debugging
 ### Check script execution - do this in another shell terminal
