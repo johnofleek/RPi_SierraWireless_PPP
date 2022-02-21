@@ -118,6 +118,13 @@ For [examples](./RC7620_pppRecords)
 sudo pppd  /dev/ttyUSB2 record pptest.txt call pppRC7620
 ```
 
+#### stop pppd if nodetach isn't enabled
+
+The method I have found (so far) is
+```
+sudo killall pppd
+```
+
 This logs the chat conversation and the ppp negotiation to pptest.txt. This is an append operation.
 
 Wireshark can decode ppp negotiation.

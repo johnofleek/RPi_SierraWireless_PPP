@@ -1,9 +1,30 @@
 
+Make an IP Cellular WAN connections using pppd
 
+* RPi4 ttyACM0
+* PPPos
+* RC7620 SWI9X07H_00.08.19.00
+* RC7620 UART1
 
-chat scriptUp
+## EE preconfig
 ```
-# modeminit (partial)
+AT+CGDCONT?
+
+AT+CGDCONT=1
+AT+CGDCONT=2,"IP","everywhere"
+AT+CGDCONT=3,"IP","everywhere"
+AT+CGDCONT=4,"IP","everywhere"
+AT+CGDCONT=5,"IP","everywhere"
+
+AT+WPPP=1,3,"eesecure","secure"
+```
+
+
+
+
+## chat dial out context 3
+
+```
 '' ATE0
 
 # activate the context so the cellular carrier is up before pppd connects
