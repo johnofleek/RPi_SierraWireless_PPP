@@ -62,9 +62,9 @@ Edit file *pppRC7620* if required
 To somewhere pppd can find them. For example
 
 ```
-sudo cp pppRC7620 /etc/ppp/peers/
-sudo cp chatUp /etc/chatscripts/
-sudo cp chatDown /etc/chatscripts/
+sudo cp ./RC_chatScripts/pppRC7620 /etc/ppp/peers/
+sudo cp ./RC_chatScripts/chatUp /etc/chatscripts/
+sudo cp ./RC_chatScripts/chatDown /etc/chatscripts/
 ```
 
 
@@ -130,12 +130,23 @@ Note that the record file also has the chat commands embedded.
 
 Standalone testing of chat scripts can be carried out like this. Where /dev/ttyUSB2 is the modem AT command port
 
+*USB - ttyUSB2*
+
 ```
-sudo chat -v -f ./chatUp > /dev/ttyUSB2 < /dev/ttyUSB2
+sudo chat -v -f ./RC_chatScripts/chatUp > /dev/ttyUSB2 < /dev/ttyUSB2
+sudo chat -v -f ./RC_chatScripts/chatDown > /dev/ttyUSB2 < /dev/ttyUSB2
 ```
 
+*UART - ttyACM0*
+Try without flow control and set baud rate
+```
+stty -F /dev/ttyAMA0 -crtscts
+stty -F /dev/ttyAMA0  115200
 
+sudo chat -v -f ./RC_chatScripts/chatUp > /dev/ttyAMA0 < /dev/ttyAMA0
 
+sudo chat -v -f ./RC_chatScripts/chatDown > /dev/ttyAMA0 < /dev/ttyAMA0
+```
 
 # Test on EE
 
@@ -183,13 +194,18 @@ Connection testing worked OK  - results
 
 Flashed with one click installer *RC76xx_Release9_BP6_GENERIC_test.exe*  
 
-
+Dial PPPos using USB interface
 ```
 $ sudo pppd  /dev/ttyUSB2 record pptestee_08_19.txt call pppRC7620
 ```
 
+Dial PPPos using Raspberrp Pi physical UART /dev/ttyAMA0
+```
+$ sudo pppd  115200 /dev/ttyAMA0 record pptestee_08_19uart.txt call pppRC7620
+```
 
-Connection testing worked OK  - results  
+
+USB connection testing worked OK  - results  
 [record](./RC_pppRecords/pptestee_08_19.txt)  
 [pcap](./RC_pppRecords/pptestee_08_19.pcap)
 

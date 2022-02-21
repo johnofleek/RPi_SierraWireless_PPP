@@ -4,14 +4,15 @@
 #hide-password 
 show-password
 noauth
+#require-pap
+name "eesecure"
+password "secure"
 nolock
 noipv6
-nocrtscts
 connect "/usr/sbin/chat -v -f /etc/chatscripts/chatUp"
 disconnect "/usr/sbin/chat -v -f /etc/chatscripts/chatDown"
 debug
-# /dev/ttyACM0
-# 115200
+
 defaultroute
 noipdefault
 # Set the name of the local system for authentication purposes to <n>.

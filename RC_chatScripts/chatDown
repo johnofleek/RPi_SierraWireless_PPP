@@ -1,6 +1,21 @@
+# abortstrings
+# ABORT BUSY ABORT VOICE ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
 
-# abortstring
-ABORT BUSY ABORT 'NO CARRIER' ABORT VOICE ABORT 'NO DIALTONE' ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
+TIMEOUT 8
+ECHO    ON
+
+# 1 second delay
+'' \d\c
+## hangup - HL7802 doesn't hangup when pppd session stops
+'' +++
+
+# 1 second delay
+'' \d\c
+
+'' ATH
+
+'NO CARRIER' AT
+
 
 '' AT
 OK ''

@@ -1,0 +1,137 @@
+
+
+
+chat scriptUp
+```
+# modeminit (partial)
+'' ATE0
+
+# activate the context so the cellular carrier is up before pppd connects
+OK AT+CGACT=1,3
+
+# ispnumber
+OK-AT-OK ATDT*99***3#
+# ispconnect
+CONNECT \d\c
+```
+
+start PPPos via physical UART using context 3
+```
+sudo pppd  115200 /dev/ttyAMA0 record pptestee_08_19uart.txt call pppRC7620
+```
+
+
+
+tail -f /var/log/syslog
+```
+Feb 21 14:22:57 raspberrypi pppd[2490]: pppd options in effect:
+Feb 21 14:22:57 raspberrypi pppd[2490]: debug#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: nodetach#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: unit 1#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: dump#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: noauth#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: /dev/ttyAMA0#011#011# (from command line)
+Feb 21 14:22:57 raspberrypi pppd[2490]: 115200#011#011# (from command line)
+Feb 21 14:22:57 raspberrypi pppd[2490]: nolock#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: connect /usr/sbin/chat -v -f /etc/chatscripts/chatUp#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: disconnect /usr/sbin/chat -v -f /etc/chatscripts/chatDown#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: record pptestee_08_19uart.txt#011#011# (from command line)
+Feb 21 14:22:57 raspberrypi pppd[2490]: nocrtscts#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: modem#011#011# (from /etc/ppp/options)
+Feb 21 14:22:57 raspberrypi pppd[2490]: noaccomp#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: asyncmap 0#011#011# (from /etc/ppp/options)
+Feb 21 14:22:57 raspberrypi pppd[2490]: nomagic#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: nopcomp#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: lcp-echo-failure 4#011#011# (from /etc/ppp/options)
+Feb 21 14:22:57 raspberrypi pppd[2490]: lcp-echo-interval 30#011#011# (from /etc/ppp/options)
+Feb 21 14:22:57 raspberrypi pppd[2490]: show-password#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: novj#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: ipcp-accept-local#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: ipcp-accept-remote#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: noipdefault#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: defaultroute#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: replacedefaultroute#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: usepeerdns#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: :#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: noipv6#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: noccp#011#011# (from /etc/ppp/peers/pppRC7620)
+Feb 21 14:22:57 raspberrypi pppd[2490]: noipx#011#011# (from /etc/ppp/options)
+Feb 21 14:22:57 raspberrypi pppd[2490]: pppd 2.4.9 started by pi, uid 0
+Feb 21 14:22:58 raspberrypi chat[2493]: abort on (BUSY)
+Feb 21 14:22:58 raspberrypi chat[2493]: abort on (NO CARRIER)
+Feb 21 14:22:58 raspberrypi chat[2493]: abort on (VOICE)
+Feb 21 14:22:58 raspberrypi chat[2493]: abort on (NO DIALTONE)
+Feb 21 14:22:58 raspberrypi chat[2493]: abort on (NO ANSWER)
+Feb 21 14:22:58 raspberrypi chat[2493]: abort on (DELAYED)
+Feb 21 14:22:58 raspberrypi chat[2493]: send (AT^M)
+Feb 21 14:22:58 raspberrypi chat[2493]: expect (OK)
+Feb 21 14:22:58 raspberrypi chat[2493]: AT^M^M
+Feb 21 14:22:58 raspberrypi chat[2493]: OK
+Feb 21 14:22:58 raspberrypi chat[2493]:  -- got it
+Feb 21 14:22:58 raspberrypi chat[2493]: send (ATDT*99***3#^M)
+Feb 21 14:22:58 raspberrypi chat[2493]: expect (CONNECT)
+Feb 21 14:22:58 raspberrypi chat[2493]: ^M
+Feb 21 14:22:58 raspberrypi chat[2493]: ATDT*99***3#^M^M
+Feb 21 14:22:58 raspberrypi chat[2493]: CONNECT
+Feb 21 14:22:58 raspberrypi chat[2493]:  -- got it
+Feb 21 14:22:58 raspberrypi chat[2493]: send (\d)
+Feb 21 14:22:59 raspberrypi pppd[2490]: Script /usr/sbin/chat -v -f /etc/chatscripts/chatUp finished (pid 2492), status = 0x0
+Feb 21 14:22:59 raspberrypi pppd[2490]: Serial connection established.
+Feb 21 14:22:59 raspberrypi pppd[2490]: using channel 1
+Feb 21 14:22:59 raspberrypi pppd[2490]: Using interface ppp1
+Feb 21 14:22:59 raspberrypi pppd[2490]: Connect: ppp1 <--> /dev/pts/2
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [LCP ConfReq id=0x1 <asyncmap 0x0>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [LCP ConfReq id=0x0 <asyncmap 0x0> <auth pap> <magic 0x5c92cca9> <pcomp> <accomp>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [LCP ConfRej id=0x0 <magic 0x5c92cca9> <pcomp> <accomp>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [LCP ConfAck id=0x1 <asyncmap 0x0>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [LCP ConfReq id=0x1 <asyncmap 0x0> <auth pap>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [LCP ConfAck id=0x1 <asyncmap 0x0> <auth pap>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [LCP EchoReq id=0x0 magic=0x0]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [PAP AuthReq id=0x1 user="raspberrypi" password=""]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [LCP DiscReq id=0x2 magic=0x5c92cca9]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [LCP EchoRep id=0x0 magic=0x5c92cca9 00 00 00 00]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [PAP AuthAck id=0x1 ""]
+Feb 21 14:23:00 raspberrypi pppd[2490]: PAP authentication succeeded
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [IPCP ConfReq id=0x1 <addr 0.0.0.0> <ms-dns1 0.0.0.0> <ms-dns2 0.0.0.0>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [IPCP ConfReq id=0x0]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [IPCP ConfNak id=0x0 <addr 0.0.0.0>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [IPCP ConfNak id=0x1 <addr 100.76.39.156> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [IPCP ConfReq id=0x2 <addr 100.76.39.156> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [IPCP ConfReq id=0x1]
+Feb 21 14:23:00 raspberrypi pppd[2490]: sent [IPCP ConfAck id=0x1]
+Feb 21 14:23:00 raspberrypi pppd[2490]: rcvd [IPCP ConfAck id=0x2 <addr 100.76.39.156> <ms-dns1 109.249.185.228> <ms-dns2 109.249.185.229>]
+Feb 21 14:23:00 raspberrypi pppd[2490]: Could not determine remote IP address: defaulting to 10.64.64.65
+Feb 21 14:23:00 raspberrypi pppd[2490]: Script /etc/ppp/ip-pre-up started (pid 2501)
+Feb 21 14:23:00 raspberrypi pppd[2490]: Script /etc/ppp/ip-pre-up finished (pid 2501), status = 0x0
+Feb 21 14:23:00 raspberrypi pppd[2490]: replacing old default route to eth0 [10.10.10.1]
+Feb 21 14:23:00 raspberrypi pppd[2490]: del old default route ioctl(SIOCDELRT): No such process(3)
+Feb 21 14:23:00 raspberrypi pppd[2490]: local  IP address 100.76.39.156
+Feb 21 14:23:00 raspberrypi pppd[2490]: remote IP address 10.64.64.65
+Feb 21 14:23:00 raspberrypi pppd[2490]: primary   DNS address 109.249.185.228
+Feb 21 14:23:00 raspberrypi pppd[2490]: secondary DNS address 109.249.185.229
+Feb 21 14:23:00 raspberrypi pppd[2490]: Script /etc/ppp/ip-up started (pid 2504)
+Feb 21 14:23:00 raspberrypi avahi-daemon[366]: Got SIGHUP, reloading.
+Feb 21 14:23:00 raspberrypi avahi-daemon[366]: No service file found in /etc/avahi/services.
+Feb 21 14:23:00 raspberrypi avahi-daemon[366]: Failed to parse address 'fe80::4009:c4ff:fea0:df89%eth0', ignoring.
+Feb 21 14:23:00 raspberrypi pppd[2490]: Script /etc/ppp/ip-up finished (pid 2504), status = 0x0
+```
+
+
+```
+pi@raspberrypi:~ $ ifconfig
+...
+ppp1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
+        inet 100.76.39.156  netmask 255.255.255.255  destination 10.64.64.65
+        ppp  txqueuelen 3  (Point-to-Point Protocol)
+        RX packets 4  bytes 52 (52.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4  bytes 58 (58.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+...
+```
+
+```
+pi@raspberrypi:~ $ ping -I ppp1 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) from 100.76.39.156 ppp1: 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=114 time=267 ms
+```
