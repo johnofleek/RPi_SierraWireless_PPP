@@ -7,8 +7,8 @@ noauth
 nolock
 noipv6
 nocrtscts
-connect "/usr/sbin/chat -v -f /etc/chatscripts/chatUp"
-disconnect "/usr/sbin/chat -v -f /etc/chatscripts/chatDown"
+connect "/usr/sbin/chat -v -f /etc/chatscripts/chatUpRC7620"
+disconnect "/usr/sbin/chat -v -f /etc/chatscripts/chatDownRC7620"
 debug
 # /dev/ttyACM0
 # 115200

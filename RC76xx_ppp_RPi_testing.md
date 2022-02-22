@@ -49,8 +49,8 @@ sudo apt-get install ppp
 
 Chat script file names
 ```
-chatDown
-chatUp
+chatDownRC7620
+chatUpRC7620
 pppRC7620
 ```
 
@@ -63,60 +63,15 @@ To somewhere pppd can find them. For example
 
 ```
 sudo cp ./RC_chatScripts/pppRC7620 /etc/ppp/peers/
-sudo cp ./RC_chatScripts/chatUp /etc/chatscripts/
-sudo cp ./RC_chatScripts/chatDown /etc/chatscripts/
+sudo cp ./RC_chatScripts/chatUpRC7620 /etc/chatscripts/
+sudo cp ./RC_chatScripts/chatDownRC7620 /etc/chatscripts/
 ```
 
+Note that chatUpRC7620 now tests to see if the modem responds to AT commands - if it doesn't 
+ the script tries switching to command mode and then hangs up.
+ This was added because terminating pppd via the UART interface doesn't hang up the modem.
+ I suspect that using DTR to hangup may fix the issue but haven't tested this
 
-
-## Connect - Using a Three SIM
-
-Try three first - doesn't require authentication
-
-### set contexts
-
-Terminal access RC7620 USB AT command port
-```
-sudo minicom -D /dev/ttyUSB2
-```
-
-Configure the contexts for the three network
-```
-AT+CGDCONT=1,"IP","three.co.uk"
-AT+CGDCONT=2,"IP","three.co.uk"
-AT+CGDCONT=3,"IP","three.co.uk"
-AT+CGDCONT=4,"IP","three.co.uk"
-AT+CGDCONT=5,"IP","three.co.uk"
-
-AT+CGACT: 3,1
-```
-Exit minicom CTRL ALT x
-
-
-### set authentication
-TBD 
-
-Not required for the three network - but note that the Pi Os is picking up PAP authentication anyway - this needs further investigation.
-
-```
-sent [PAP AuthReq id=0x1 user="raspberrypi" password=""]
-```
-
-
-### Make ppp connection
-Make an IP Cellular WAN connections using pppd
-
-
-```
-sudo pppd  /dev/ttyUSB2 115200 call pppRC7620
-```
-
-### Make ppp connection and create a log that can be used with wireshark
-
-For [examples](./RC7620_pppRecords) 
-```
-sudo pppd  /dev/ttyUSB2 record pptest.txt call pppRC7620
-```
 
 #### stop pppd if nodetach isn't enabled
 
@@ -125,11 +80,7 @@ The method I have found (so far) is
 sudo killall pppd
 ```
 
-This logs the chat conversation and the ppp negotiation to pptest.txt. This is an append operation.
-
-Wireshark can decode ppp negotiation.
-In wireshark open the file created by pppd, wireshark will automatically decoded the ppp negotiation in a human readable format. 
-Note that the record file also has the chat commands embedded.  
+ 
 
 
 
@@ -140,8 +91,8 @@ Standalone testing of chat scripts can be carried out like this. Where /dev/ttyU
 *USB - ttyUSB2*
 
 ```
-sudo chat -v -f ./RC_chatScripts/chatUp > /dev/ttyUSB2 < /dev/ttyUSB2
-sudo chat -v -f ./RC_chatScripts/chatDown > /dev/ttyUSB2 < /dev/ttyUSB2
+sudo chat -v -f ./RC_chatScripts/chatUpRC7620 > /dev/ttyUSB2 < /dev/ttyUSB2
+sudo chat -v -f ./RC_chatScripts/chatDownRC7620 > /dev/ttyUSB2 < /dev/ttyUSB2
 ```
 
 *UART - ttyACM0*
@@ -195,24 +146,37 @@ Connection testing worked OK  - results
 
 
 
-# Test on EE with older modem FW
+# Test on EE with older modem FW RC7620-1 SWI9X07H_00.08.19.00
 
-## RC7620-1 SWI9X07H_00.08.19.00
+Flashed with one click installer *RC76xx_Release9_BP6_GENERIC_test.exe* 
 
-Flashed with one click installer *RC76xx_Release9_BP6_GENERIC_test.exe*  
+This FW works ok with the USB serial port but with the UART serial port the PPP connection
+ is made ok but following PPP disconnection the modem is in a broken state which can't be recovered
+ without a AT!RESET 
+ 
+ [some notes on forum](https://forum.sierrawireless.com/t/rc7620-pppos-uart-1-ppp-termination-causes-odd-modem-behaviour-requiring-reset-or-por/26323)
+
+
+# Test on EE with later modem FW RC7620-1 SWI9X07H_00.08.24.00
 
 Dial PPPos using USB interface
 ```
 $ sudo pppd  /dev/ttyUSB2 record pptestee_08_19.txt call pppRC7620
 ```
 
-Dial PPPos using Raspberrp Pi physical UART /dev/ttyAMA0
+Dial PPPos using Raspberry Pi physical UART /dev/ttyAMA0
 ```
 $ sudo pppd  115200 /dev/ttyAMA0 record pptestee_08_19uart.txt call pppRC7620
 ```
 
+This logs the chat conversation and the ppp negotiation to pptest.txt. This is an append operation.
 
-USB connection testing worked OK  - results  
+Wireshark can decode ppp negotiation.
+In wireshark open the file created by pppd, wireshark will automatically decoded the ppp negotiation in a human readable format. 
+Note that the record file also has the chat commands embedded. 
+
+
+Older USB connection testing worked OK  - results  
 [record](./RC_pppRecords/pptestee_08_19.txt)  
 [pcap](./RC_pppRecords/pptestee_08_19.pcap)
 
@@ -221,12 +185,12 @@ USB connection testing worked OK  - results
 Modem reports
 
 ```
-Model: RC7620
+Model: RC7620-1
 QTI baseline: MPSS.JO.2.0.2.c1.1-00073-9607_GENNS_PACK-1.416077.1.419248.1
-Revision: SWI9X07H_00.08.19.00 725c0e jenkins 2021/09/08 14:36:45
-IMEI: 353634110110227
-IMEI SV: 18
-FSN: 7Q0273850613B0
+Revision: SWI9X07H_00.08.24.00 cb6ed3 jenkins 2022/01/07 03:05:21
+IMEI: 353635110154131
+IMEI SV: 19
+FSN: 7T1017851610B0
 ```
 
 Check IP address

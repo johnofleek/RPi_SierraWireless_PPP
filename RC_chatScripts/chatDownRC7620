@@ -1,8 +1,8 @@
 # abortstrings
 # ABORT BUSY ABORT VOICE ABORT 'NO DIAL TONE' ABORT 'NO ANSWER' ABORT DELAYED
 
-TIMEOUT 8
-ECHO    ON
+TIMEOUT 12
+# ECHO    ON
 
 # 1 second delay
 '' \d\c
