@@ -1,8 +1,14 @@
 ## Purpose
-Enable the RPi 3/4 + RPi OS to make a ppp connection to the internet using Sierra Wireless modems
+Enable the RPi 3/4 + RPi OS + pppd to make a PPPos connection to the Internet using Sierra Wireless modems
 
 ## RC7620 module  
-[USB guide and report](./RC76xx_ppp_RPi_testing.md)  
+SIMs successfully used
+* EE (APN + PAP)
+* Three (APN only)
+* Things Mobile (APN only)
+
+[USB and UART - guide and report](./RC76xx_ppp_RPi_testing.md)  
+[Using Things Mobile SIM](./RC76xx_ppp_RPi_ThingsMobile_testing.md)
 
 [scripts](./RC_chatScripts)  
 

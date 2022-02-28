@@ -26,7 +26,7 @@ OK AT
 # activate the context so the cellular carrier is up before pppd connects
 # assumes 
 # AT+CGDCONT
-# AT+WPPP has been used to manually use to set the authenticatio (if required)
+# AT+WPPP has been used to manually use to set the authentication (if required)
  
 OK AT+CGACT=1,3
 
