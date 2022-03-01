@@ -129,19 +129,21 @@ AT+CGDCONT?
 ```
 
 Manually add the PAP credentials
+```
 AT+CGAUTH=<cid>,<auth_prot>[, <userid>,<password>]
 <auth_prot> (Required authentication type)
 0—None. Username and password are not required.
 1—PAP. Username and password accepted
 2—CHAP. Username and password (secret) accepted
+```
 
 ```
 AT+CGAUTH=2,1,"eesecure","secure"
-
+```
 
 
 chat script establishes context and authentication prior to ppp negotiating the session by using
-
+```
 AT+CGACT=
 [<state> [, <cid>
 
@@ -170,7 +172,7 @@ and that context 2 has to be unconnected if using pppd. I have no ideas why
 
 
 
-```
+
 
 # Test on EE 
 
