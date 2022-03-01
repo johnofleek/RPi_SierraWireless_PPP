@@ -7,16 +7,22 @@ SIMs successfully used
 * Three (APN only)
 * Things Mobile (APN only)
 
-[USB and UART - guide and report](./RC76xx_ppp_RPi_testing.md)  
-[Using Things Mobile SIM](./RC76xx_ppp_RPi_ThingsMobile_testing.md)
+[USB and UART - guide and report](./RC76xx_ppp_RPi_testing.md)   
 
-[scripts](./RC_chatScripts)  
+[Using Things Mobile SIM](./RC76xx_ppp_RPi_ThingsMobile_testing.md)  
+
+[scripts](./RC_chatScripts)   
 
 [logs](./RC7620_pppRecords)  
 
+## WP7607 module
+WIP  
+[UART - guide and report]](./WP76xx_ppp_RPi_testing.md)  
+
+[scripts](./WP76_chatScripts)
 
 ## HL7802 module  
-[USB guide and report](./HL7802_ppp_RPi_testing.md)  
+[USB guide and report](./HL7802_ppp_RPi_testing.md)   
 
 [scripts](./HL78xx_chatScripts)  
 
