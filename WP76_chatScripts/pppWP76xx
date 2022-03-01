@@ -5,12 +5,12 @@
 show-password
 noauth
 #require-pap
-name "eesecure"
-password "secure"
+#name "eesecure"
+#password "secure"
 nolock
 noipv6
-connect "/usr/sbin/chat -v -f /etc/chatscripts/chatUp"
-disconnect "/usr/sbin/chat -v -f /etc/chatscripts/chatDown"
+connect "/usr/sbin/chat -v -f /etc/chatscripts/chatUpWP76xx"
+disconnect "/usr/sbin/chat -v -f /etc/chatscripts/chatDownWP76xx"
 debug
 
 defaultroute
@@ -22,14 +22,14 @@ noipdefault
 # with the user option, <n> will be used as the name to send to the peer
 # when authenticating the local system to the peer. (Note that pppd does
 # not append the domain name to <n>.)
-# name streamip
+
 # pap-restart 1
 # pap-max-authreq 10
 
 # BCO manual options
 replacedefaultroute
 # dump: prints out all ppd options
-dump
+# dump
 # noccp: disables compression control protocol negociation
 noccp
 # usepeerdns: asks the peer for up to 2 DNS server address

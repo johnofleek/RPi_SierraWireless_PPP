@@ -1,0 +1,30 @@
+# abortstrings
+
+TIMEOUT 12
+# ECHO    ON
+
+# 1 second delay
+'' \d\c
+## hangup - HL7802 doesn't hangup when pppd session stops
+'' +++
+
+# 1 second delay
+'' \d\c
+
+'' ATH
+
+'NO CARRIER' AT
+
+
+'' AT
+OK ''
+# deactivate the context so the cellular carrier is down 
+# OK AT+CGACT=0,1
+# OK AT
+
+
+# prelogin
+
+# postlogin
+
+# end of pppconfig stuff
