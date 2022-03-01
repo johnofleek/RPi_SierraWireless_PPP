@@ -17,7 +17,7 @@ SIMs successfully used
 
 ## WP7607 module
 WIP  
-[UART - guide and report]](./WP76xx_ppp_RPi_testing.md)  
+[UART - guide and report](./WP76xx_ppp_RPi_testing.md)  
 
 [scripts](./WP76_chatScripts)
 
