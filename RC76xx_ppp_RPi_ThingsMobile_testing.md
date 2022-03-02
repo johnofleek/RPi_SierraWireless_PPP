@@ -1,5 +1,5 @@
 ## Scope
-To see what happens when we use PPP with a Sierra Wireless RC7620 connected via RC7620 composite USB device UART to an RPi
+To see what happens when we use PPPos with a Sierra Wireless RC7620 connected via RC7620 UART1 device UART to an RPi ttyACM0 UART
 
 ## Kit used
 * RPi4

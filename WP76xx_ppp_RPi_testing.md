@@ -84,6 +84,7 @@ sudo chat -v -f ./chatUp > /dev/ttyUSB2 < /dev/ttyUSB2
 Summary of testing so far
 * using CGACT in combo with  CGDCONT (and CGAUTH) on context 1&2 connect fails
 * Using SIM (Things mobile) that doesn't require authentication - using context 1 or and default pppd PAP negotiation worked 
+* testing with ee - when connected to LTE and using CGDCONT and CGAUTH - setting CGAUTH to anything the ppp negotiation succeeds
 
 
 Check the WP76 UART mapping - use the WP USB OTG port or shell into the WP  and use /dev/ttyAT
@@ -233,7 +234,7 @@ Syslog
 
 ```
 
-# notes on FW
+# Notes on FW
 
 
 
@@ -358,4 +359,13 @@ Mar  1 11:36:19 raspberrypi avahi-daemon[369]: Got SIGHUP, reloading.
 Mar  1 11:36:19 raspberrypi avahi-daemon[369]: No service file found in /etc/avahi/services.
 Mar  1 11:36:19 raspberrypi avahi-daemon[369]: Failed to parse address 'fe80::4009:c4ff:fea0:df89%eth0', ignoring.
 Mar  1 11:36:19 raspberrypi pppd[2047]: Script /etc/ppp/ip-up finished (pid 2057), status = 0x0
+```
+
+## radio state
+
+```
+at+cops?
++cops: 0,0,"3 UK Things Mobile",7
+
+at!gstatus?
 ```
