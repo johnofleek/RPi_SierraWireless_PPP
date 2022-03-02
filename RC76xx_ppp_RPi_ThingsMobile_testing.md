@@ -1,5 +1,9 @@
 ## Scope
-To see what happens when we use PPPos with a Sierra Wireless RC7620 connected via RC7620 UART1 device UART to an RPi ttyACM0 UART
+To see what happens when we use PPPos with a Sierra Wireless RC7620 connected via RC7620 UART1 to the RPi /dev/ttyACM0 UART.
+
+## Purpose
+Test the process with a Things Mobile SIM which does not require authentication.
+We leave context 1 not configured - note that context 1 connects anyway - is this due to LTE host network signaling requirements?
 
 ## Kit used
 * RPi4
