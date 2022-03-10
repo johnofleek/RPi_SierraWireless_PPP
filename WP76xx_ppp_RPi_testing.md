@@ -125,7 +125,8 @@ AT+CGDCONT=4
 AT+CGDCONT=5
 
 AT+CGDCONT?
-
++CGDCONT: 1,"IPV4V6","","0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0",0,0,0,0
++CGDCONT: 2,"IP","everywhere","0.0.0.0",0,0,0,0
 
 ```
 
@@ -170,9 +171,9 @@ at+cgact?
 and that context 2 has to be unconnected if using pppd. I have no ideas why
  as this is not the case for the RC76, HL and HL7802 modules
 
-
-
-
+```
+AT+CGPADDR
+```
 
 
 # Test on EE 
